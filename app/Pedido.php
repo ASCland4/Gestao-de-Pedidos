@@ -14,10 +14,7 @@ class Pedido extends Model
         ->withPivot('id','created_at', 'updated_at'); 
     }
 
-    /*
-        1 - Modelo do relacionamento NxN em relação o Modelo que estamos implementando
-        2 - É a tabela auxiliar que armazena os registros de relacionamento
-        3 - Representa o nome da FK da tabela mapeada pelo modelo na tabela de relacionamento
-        4 - Representa o nome da FK da tabela mapelada pelo model utilizado no relacionamento que estamos implementando
-    */
+    public function cliente() {
+        return $this->belongsTo(Cliente::class, 'cliente_id');
+    }
 }

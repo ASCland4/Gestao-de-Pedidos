@@ -25,7 +25,6 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                 <tbody>
@@ -34,14 +33,10 @@
                             <td>{{ $pedido->id }}</td>
                             <td>{{ $pedido->cliente_id }}</td>
                             <td><a href="{{ route('pedido-produto.create', ['pedido' => $pedido->id]) }}"
-                                    class="pedido-info">Adicionar Produtos</a></td>
+                                    class="pedido-info">Produtos</a></td>
                             <td>
                                 <a href="{{ route('pedido.show', ['pedido' => $pedido->id]) }}" 
                                     class="botao-acoes visualizar">Visualizar</a>
-                            </td>
-                            <td>
-                                <a href="{{ route('pedido.edit', ['pedido' => $pedido->id]) }}"
-                                    class="botao-acoes editar">Editar</a>
                             </td>
                             <td>
                                 <form id="form_{{ $pedido->id }}" method="post"
@@ -70,7 +65,7 @@
 
     <style>
         .tabela-container {
-            width: 90%;
+            width: 70%;
             margin: 0 auto;
             overflow-x: auto;
         }
@@ -125,11 +120,6 @@
 
         .visualizar {
             background: #17a2b8;
-            color: white;
-        }
-
-        .editar {
-            background: #ffc107;
             color: white;
         }
 

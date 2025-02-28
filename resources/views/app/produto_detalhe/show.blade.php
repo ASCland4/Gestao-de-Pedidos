@@ -13,7 +13,7 @@
         <div class="align">
             <div class="menu2">
                 <ul>
-                    <li><a href="{{ route('produto-detalhe.index') }}">Voltar</a></li>
+                    <li><a href="{{ route('produto-detalhe.index') }}">Vol tar</a></li>
                     <li><a href="{{ route('produto.edit', $produtoDetalhe->produto->id) }}">Editar</a></li>
                 </ul>
             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pedido;
 use App\Cliente;
+use App\PedidoProduto;
 
 class PedidoController extends Controller
 {
@@ -63,7 +64,15 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        //
+        $pedido = Pedido::with(['cliente', 'produtos'])->find($id);
+
+        if (!$pedido) {
+            return redirect()->route('pedido.index')->with('error', 'Pedido não encontrado.');
+        }
+    
+        $cliente = $pedido->cliente; // Busca o cliente relacionado ao pedido
+    
+        return view('app.pedido.show', compact('pedido', 'cliente'));
     }
 
     /**
@@ -74,7 +83,7 @@ class PedidoController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -97,6 +106,15 @@ class PedidoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Encontra o pedido pelo ID
+        $pedido = Pedido::find($id);
+
+        // Remove todos os produtos vinculados ao pedido na tabela pedidos_produtos
+        $pedido->produtos()->detach();
+
+        // Remover o produto do pedido
+        $pedido->delete();
+
+        return redirect()->route('pedido.index')->with('success', 'Pedido excluído com sucesso.');
     }
 }

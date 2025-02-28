@@ -3,7 +3,6 @@
 @section('titulo', 'Pedido Produto')
 
 @section('conteudo')
-
     <div class="conteudo-pagina">
 
         <div class="titulo-pagina-2">
@@ -38,7 +37,7 @@
                                     <th>ID</th>
                                     <th>Nome do Produto</th>
                                     <th>Data de Inclusão</th>
-                                    <th>Ações</th>
+                                    <th colspan="2">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>

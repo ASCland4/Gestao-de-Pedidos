@@ -55,12 +55,10 @@ Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(functi
     Route::resource('cliente', 'ClienteController');
     Route::resource('pedido', 'PedidoController');
 
-    //Route::resource('pedido-produto', 'PedidoProdutoController');
     Route::get('pedido-produto/create{pedido}', 'PedidoProdutoController@create')->name('pedido-produto.create');
     Route::post('pedido-produto/store/{pedido}', 'PedidoProdutoController@store')->name('pedido-produto.store');
     Route::get('pedido-produto/{id}/edit', 'PedidoProdutoController@edit')->name('pedido-produto.edit');
     Route::put('/pedido-produto/{id}', 'PedidoProdutoController@update')->name('pedido-produto.update');
-    //Route::delete('pedido-produto/destroy/{pedido}/{produto}', 'PedidoProdutoController@destroy')->name('pedido-produto.destroy');
     Route::delete('pedido-produto/destroy/{pedidoProduto}/{pedido_id', 'PedidoProdutoController@destroy')->name('pedido-produto.destroy');
 });
 

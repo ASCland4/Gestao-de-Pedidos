@@ -117,26 +117,6 @@ class PedidoProdutoController extends Controller
     //public function destroy(Pedido $pedido, Produto $produto)
     public function destroy(PedidoProduto $pedidoProduto, $pedido_id)
     {
-        /*
-        print_r($pedido->getAttributes());
-        echo '<hr>';
-        print_r($produto->getAttributes());
-        */
-
-        //echo $pedido->id.' - '.$produto->id;
-
-        //convencional
-        /*
-        PedidoProduto::where([
-            'pedido_id' => $pedido->id,
-            'produto_id' => $produto->id
-        ])->delete();
-        */
-
-        //detach (delete pelo relacionamento)
-        //$pedido->produtos()->detach($produto->id);
-        //produto_id
-
         $pedidoProduto->delete();
         
         return redirect()->route('pedido-produto.create',['pedido'=> $pedidoProduto->pedido_id]);
