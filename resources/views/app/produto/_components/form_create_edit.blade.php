@@ -1,10 +1,9 @@
-@if(isset($produto->id))
-    <form method="post" action="{{ isset($produto->id) ? route('produto.update', $produto->id) : route('produto.store') }}">
-        @csrf
-        @isset($produto->id)
-            @method('PUT')
-        @endisset
-@endif
+<form method="post" action="{{ isset($produto->id) ? route('produto.update', $produto->id) : route('produto.store') }}">
+    @csrf
+    @isset($produto->id)
+        @method('PUT')
+    @endisset
+
     <select name="fornecedor_id">
         <option>-- Selecione um Fornecedor --</option>
 
@@ -34,6 +33,5 @@
 
     <button type="submit" class="borda-preta">
         {{ isset($produto->id) ? 'Atualizar' : 'Cadastrar' }}
-        
     </button>
-<form>
+</form>
