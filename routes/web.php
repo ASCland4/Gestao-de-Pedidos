@@ -1,7 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PrincipalController;
+use App\Http\Controllers\SobreNosController;
+use App\Http\Controllers\ContatoController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProdutoDetalheController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PedidoProdutoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,28 +24,26 @@ use App\Http\Controllers\ProdutoController;
 |
 */
 
-Route::get('/', 'PrincipalController@principal')->name('site.index')->middleware('log.acesso');
-Route::get('/sobre-nos', 'SobreNosContorller@sobreNos')->name('site.sobrenos');
-Route::get('/contato', 'ContatoContorller@contato')->name('site.contato');
-Route::post('/contato', 'ContatoContorller@salvar')->name('site.contato');
+Route::get('/', [PrincipalController::class, 'principal'])->name('site.index')->middleware('log.acesso');
+Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
+Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
+Route::post('/contato', [ContatoController::class, 'salvar'])->name('site.contato');
 
-Route::get('/login/{erro?}', 'LoginController@index')->name('site.login');
-Route::post('/login', 'LoginController@autenticar')->name('site.login');
+Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
+Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login');
 
-//app
-Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(function() {
-    Route::get('/home', 'HomeController@index')->name('app.home');
-    Route::get('/sair', 'LoginController@sair')->name('app.sair');
+Route::middleware('auth')->prefix('/app')->group(function() {
+    Route::get('/home', [HomeController::class, 'index'])->name('app.home');
+    Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
 
-    Route::get('/fornecedor', 'FornecedorController@index')->name('app.fornecedor');
-    Route::post('/fornecedor/listar', 'FornecedorController@listar')->name('app.fornecedor.listar');
-    Route::get('/fornecedor/listar', 'FornecedorController@listar')->name('app.fornecedor.listar');
-    Route::get('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
-    Route::post('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
-    Route::get('/fornecedor/editar/{id}/{msg?}', 'FornecedorController@editar')->name('app.fornecedor.editar');
-    Route::get('/fornecedor/excluir/{id}', 'FornecedorController@excluir')->name('app.fornecedor.excluir');
+    Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
+    Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
+    Route::get('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
+    Route::get('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
+    Route::post('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
+    Route::get('/fornecedor/editar/{id}/{msg?}', [FornecedorController::class, 'editar'])->name('app.fornecedor.editar');
+    Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
 
-    //produtos
     Route::prefix('/produto')->group(function () {
         Route::get('/', [ProdutoController::class, 'index'])->name('produto.index');
         Route::get('/create', [ProdutoController::class, 'create'])->name('produto.create');
@@ -46,20 +54,15 @@ Route::middleware('autenticacao:padrao,visitante')->prefix('/app')->group(functi
         Route::delete('/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');
     });
 
-    //produtos detalhes
-    Route::resource('produto-detalhe', 'ProdutoDetalheController');
-    Route::get('produto-detalhe/{id}/edit', 'ProdutoDetalheController@edit')->name('produto-detalhe.edit');
-    Route::put('produto-detalhe/{id}', 'ProdutoDetalheController@update')->name('produto-detalhe.update');
-    Route::delete('produto-detalhe/{id}', 'ProdutoDetalheController@destroy')->name('produto-detalhe.destroy');
+    Route::resource('produto-detalhe', ProdutoDetalheController::class);
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('pedido', PedidoController::class);
 
-    Route::resource('cliente', 'ClienteController');
-    Route::resource('pedido', 'PedidoController');
-
-    Route::get('pedido-produto/create{pedido}', 'PedidoProdutoController@create')->name('pedido-produto.create');
-    Route::post('pedido-produto/store/{pedido}', 'PedidoProdutoController@store')->name('pedido-produto.store');
-    Route::get('pedido-produto/{id}/edit', 'PedidoProdutoController@edit')->name('pedido-produto.edit');
-    Route::put('/pedido-produto/{id}', 'PedidoProdutoController@update')->name('pedido-produto.update');
-    Route::delete('pedido-produto/destroy/{pedidoProduto}/{pedido_id', 'PedidoProdutoController@destroy')->name('pedido-produto.destroy');
+    Route::get('pedido-produto/create/{pedido}', [PedidoProdutoController::class, 'create'])->name('pedido-produto.create');
+    Route::post('pedido-produto/store/{pedido}', [PedidoProdutoController::class, 'store'])->name('pedido-produto.store');
+    Route::get('pedido-produto/{id}/edit', [PedidoProdutoController::class, 'edit'])->name('pedido-produto.edit');
+    Route::put('/pedido-produto/{id}', [PedidoProdutoController::class, 'update'])->name('pedido-produto.update');
+    Route::delete('pedido-produto/destroy/{pedidoProduto}/{pedido_id}', [PedidoProdutoController::class, 'destroy'])->name('pedido-produto.destroy');
 });
 
 Route::fallback(function() {
