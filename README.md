@@ -1,78 +1,65 @@
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## 📦 Sistema de Gestão de Pedidos
+O Sistema de Gestão de Pedidos é uma aplicação desenvolvida em Laravel para facilitar o gerenciamento de pedidos, integrando informações de clientes, produtos e fornecedores. O ponto de centralização das informações é a tabela de produtos, com uso dos models, principal o Item.php, que estabelece mais relações para a tabela produtos.
 
-## About Laravel
+### Integração com a Aplicação
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Os modelos Eloquent na pasta `app/` representam as tabelas do banco e estabelecer relações com demais tabelas, alguns como ponto central dos Relacionamentos. 
+- Os controllers gerenciam a lógica de negócio e interagem com os modelos para operações CRUD. Alguns deles não estão configurados todas as funcões, mas não afetam a utilização do projeto como esta.
+- Middlewares e outros serviços podem registrar acessos ou controlar autenticação com base nos dados do banco.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Esta estrutura garante uma abordagem organizada e escalável para o gerenciamento dos dados da aplicação.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Para mais detalhes, consulte a documentação oficial do Laravel sobre [Migrations](https://laravel.com/docs/migrations) e [Eloquent ORM](https://laravel.com/docs/eloquent).
 
-## Learning Laravel
+## Banco de Dados
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Este projeto utiliza um banco de dados relacional para gerenciar as informações essenciais do sistema de gestão de pedidos. A estrutura do banco é definida e mantida por meio das migrations do Laravel, enquanto os seeders são usados para popular os dados iniciais.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Entidades Principais e Relacionamentos
 
-## Laravel Sponsors
+- **Clientes:** Armazena informações dos clientes.
+- **Fornecedores:** Detalhes dos fornecedores.
+- **Produtos:** Informações dos produtos, relacionados a fornecedores e unidades.
+- **Detalhes dos Produtos:** Informações adicionais dos produtos.
+- **Pedidos:** Representa os pedidos realizados pelos clientes.
+- **Produtos dos Pedidos:** Tabela pivô que relaciona pedidos e produtos com quantidades.
+- **Motivos de Contato:** Razões para contatos via site.
+- **Contatos do Site:** Armazena mensagens enviadas pelo formulário de contato.
+- **Logs de Acesso:** Registra eventos de acesso dos usuários.
+- **Unidades:** Unidades de medida para os produtos.
+- **Usuários:** Usuários do sistema para autenticação.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Gerenciamento do Esquema do Banco
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+- **Migrations:** Localizadas em `database/migrations/`, definem a estrutura das tabelas e alterações no esquema.
+- **Seeders:** Localizados em `database/seeds/`, populam as tabelas com dados iniciais ou de teste.
 
-## Contributing
+### Configuração do Banco de Dados
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Configure o arquivo `.env` com as credenciais corretas do banco de dados.
+2. Execute as migrations para criar as tabelas:
+   ```
+   php artisan migrate
+   ```
+3. (Opcional) Execute os seeders para popular os dados iniciais:
+   ```
+   php artisan db:seed
+   ```
+## ✅ Requisitos e Compatibilidade do Projeto
 
-## Code of Conduct
+### 📦 Laravel
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **Versão do framework**: `^7.29`
+- Desenvolvido para uso com PHP **7.2.5 até 7.4**.
+- **Incompatível com PHP 8.1+ sem ajustes específicos**, podendo gerar erros como:
+  - `Return type should be compatible with ArrayAccess::offsetExists(...)`
+  - `Deprecated: Function ... is deprecated`
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### ⚙️ Requisitos definidos no `composer.json`
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```json
+"php": "^7.2.5"
